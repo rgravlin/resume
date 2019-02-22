@@ -1,0 +1,24 @@
+[
+  {
+    "name": "website",
+    "image": "${CONFIG_CONTAINER}",
+    "memory": 256,
+    "cpu": 512,
+    "portMappings": [
+     
+      {
+        "hostPort": 0,
+        "containerPort": 443,
+        "protocol": "tcp"
+      }      
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${CONFIG_LOG_GROUP}",
+        "awslogs-region": "${CONFIG_LOG_REGION}",
+        "awslogs-stream-prefix": "${CONFIG_LOG_PREFIX}"
+      }
+    }
+  }
+]

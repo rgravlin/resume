@@ -1,0 +1,11 @@
+Content-Type: multipart/mixed; boundary="==BOUNDARY=="
+MIME-Version: 1.0
+
+--==BOUNDARY==
+Content-Type: text/x-shellscript; charset="us-ascii"
+
+#!/bin/bash
+# Set any ECS agent configuration options
+echo "ECS_CLUSTER=${CONFIG_CLUSTER}" >> /etc/ecs/ecs.config
+
+--==BOUNDARY==--

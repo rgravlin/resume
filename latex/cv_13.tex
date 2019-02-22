@@ -1,0 +1,147 @@
+\documentclass[10pt]{article} % Default font size
+
+\input{structure.tex} % Include the file specifying document layout
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+% NAME AND CONTACT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Ryan Gravlin -- Resume} % Print the main header
+
+%------------------------------------------------
+
+\parbox{0.5\textwidth}{ % First block
+\begin{tabbing} % Enables tabbing
+\hspace{3cm} \= \hspace{4cm} \= \kill % Spacing within the block
+{\bf Address} \> 17019 SW 142$^{ND}$ PL,\\ % Address line 1
+\> Miami, FL 33177 \\ % Address line 2
+{\bf Date of Birth} \> 20$^{th}$ December 1981 \\ % Date of birth 
+\end{tabbing}}
+\hfill % Horizontal space between the two blocks
+\parbox{0.5\textwidth}{ % Second block
+\begin{tabbing} % Enables tabbing
+\hspace{3cm} \= \hspace{4cm} \= \kill % Spacing within the block
+{\bf Mobile Phone} \> +1 (239) 227 6331 \\ % Mobile phone
+{\bf Email} \> \href{mailto:ryan.gravlin@gmail.com}{ryan.gravlin@gmail.com} \\ % Email address
+{\bf GitHub} \> \href{https://github.com/MajorDB/resume}{https://github.com/MajorDB/resume} \\ % GitHub URL
+\end{tabbing}}
+%----------------------------------------------------------------------------------------
+% EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\tabbedblock{
+\bf{2008} \> Associate of Arts - \href{https://www.fsw.edu/}{Florida SouthWestern State College} \\[5pt]
+}
+
+%----------------------------------------------------------------------------------------
+% EMPLOYMENT HISTORY SECTION
+%----------------------------------------------------------------------------------------
+
+\section{Employment History}
+
+\job
+{2015 -}{Present}
+{CareCloud Corporation, Miami, FL, United States}
+{https://www.carecloud.com}
+{Manager of DevOps}
+{\begin{itemize-noindent}
+\item{Deployed and maintained AWS development and production environments}
+\item{Designed GCP organizational and permission structure that fulfills business requirements}
+\item{Developed a high level migration plan for AWS to GCP}
+\item{Developed and implemented a migration plan for physical data center assets (platform core) to AWS and closed data center cage}
+\item{Created and maintained CICD resources}
+\begin{itemize}
+\item{AWS/GCP Resources - Terraform}
+\item{Build and Deploy – Bamboo, AWS/GCP Builders}
+\item{Configuration Management - Chef, Ansible}
+\item{Artifact Storage - AWS ECR, AWS S3 Dockerhub, GCP GCR, GCP GS}
+\end{itemize}
+\item{Deployed HIPAA compliant ELK stack using ES 6.5 on EC2}
+\item{Created service tooling for custom health monitoring of platform infrastructure}
+\item{Responsible for managing and helping to resolve production platform issues}
+\end{itemize-noindent}}
+
+%------------------------------------------------
+
+\job
+{2009 -}{2015}
+{Baystate Office Solutions, Maynard, MA, United States}
+{http://services.baystateoffice.com/}
+{Computer Repair Technician and Technical Support}
+{\begin{itemize-noindent}
+\item{Performed remote, on-site and in-house repair of desktops, laptops, and servers}
+\item{Installed and configured Windows XP and Windows 7 on desktops and laptops}
+\item{Installed and configured Windows Small Business Server and Windows Server Standard utilizing Active Directory and Microsoft Exchange server}
+\item{Setup small business VoIP TalkSwitch and FortiVoice phone systems}
+\item{Installed surveillance systems, analog and IP cameras with DVRs (standalone and PC based)}
+\item{Installed and maintained backup disaster recovery systems for customers}
+\item{Used Zenith MSP software to manage customer networks and servers}
+\item{Utilized SharePoint and Microsoft Access internally for automated updates of distributor inventory and export to eCommerce websites}
+\end{itemize-noindent}}
+
+%------------------------------------------------
+
+\job
+{2009 -}{2009}
+{Eliza Corporation, Beverly, MA, United States}
+{http://www.elizacorp.com/}
+{IT Specialist}
+{\begin{itemize-noindent}
+\item{Supported 150+ user base consisting of 1500+ workstations and servers in a team environment}
+\item{Maintained Windows environment consisting of HP DL Series servers, Premio Desktops, and Dell Lenovo laptops through the use of Ghost}
+\item{Maintained Help Desk system (Trouble Ticket Express)}
+\item{Maintained network monitoring systems}
+\item{Provided telephone and remote support for off-site employees}
+\item{Implemented security remediation based on 3rd party automated scanning}
+\item{Used QualysGuard appliance and service to verify remediation}
+\item{Recommended remediation based on business requirements and operating policies}
+\end{itemize-noindent}}
+
+%------------------------------------------------
+
+\job
+{2004 -}{2008}
+{New Vision Consulting, Naples, FL, United States}
+{No URL}
+{IT Consultant and Support}
+{\begin{itemize-noindent}
+\item{Maintained SSL FTP sites using RaidenFTPD}
+\item{Maintained New Vision network that included a CheckPoint firewall, HP ML350 4U, 3x Dell 650 1U, and a Dell 1650 2U operating on a Windows 2003 Small Business Server environment using Exchange 2003}
+\item{Maintained multiple client networks, ranging from 5-50 workstations}
+\item{Implemented CheckPoint Safe at appliances including CheckPoint SecuRemote for VPN connectivity}
+\item{Implemented security solutions using recommended hardware and software for client networks that included Anti-Virus, VPN Capable Firewall, Hosted Anti-Spam, Remote Logging, Patch Management}
+\item{Ran basic security audits on client networks using free and commercial software products}
+\item{Recommended and implemented remediation based on business requirements}
+\item{Tested, recommended and implemented Microsoft patch management solutions using Shavlik HFNetChkPro to clients}
+\item{Implemented network and server migrations}
+\item{Consulted with clients and made recommendations based on business needs and constraints}
+\item{Attempted to find alternative solutions for clients such as using free software for small businesses that could not afford expensive commercial solutions}
+\end{itemize-noindent}}
+
+%-----------------------------------------------
+\pagebreak
+
+\job
+{2000 -}{2001}
+{iConverse, Waltham, MA, United States}
+{No URL}
+{Linux System Administrator}
+{\begin{itemize-noindent}
+\item{Supported 150 user base consisting of 300 workstations in a team environment}
+\item{Maintained a Windows and Linux environment consisting of Compaq DeskPro EN Workstations, Sony VAIO Laptops, Dell Precision 420 Servers, and Compaq Proliant DL380 and DL360 Servers}
+\item{Maintained intranet web server running Apache}
+\item{Maintained HP network printers using HP Jet Admin}
+\item{Created iConverse intranet website and designed in Perl an IT Request Ticket System}
+\item{Provided Windows NT 4.0/2000 Server installations}
+\item{Helped manage Windows NT Domain; adding/removing users, setting up NT file and print shares}
+\end{itemize-noindent}}
+
+%------------------------------------------------
+
+\end{document}

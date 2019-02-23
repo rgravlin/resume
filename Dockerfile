@@ -15,6 +15,6 @@ WORKDIR /usr/app
 COPY . /usr/app/
 RUN bundle install
 
-EXPOSE 4568
+EXPOSE 4570
 ENTRYPOINT ["/bin/bash","-c"]
 CMD ["ruby /usr/app/tf_runner.rb"]

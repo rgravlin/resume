@@ -82,6 +82,7 @@ class HasRun
   @run = false
   @locked = false
 
+
   def self.get
     @run
   end
@@ -100,25 +101,26 @@ class HasRun
   end
 end
 
-# Initialize and create plan on boot so first run is faster
-runit("tf", "init")
-runit("tf", "plan -out=plan")
+runit("tf", "init -no-color")
+runit("tf", "plan -out=plan -no-color")
 
 
 get '/resume' do
   action = HasRun.get ? "destroy" : "apply"
+
+  puts "Action: #{action}"
 
   case action
   when "apply"
     if HasRun.locked?
     runit("tf", "init")
     runit("tf", "plan -out=plan")
-    response = runit("tf", "apply \"plan\"")
+    response = runit("tf", "apply \"plan\" -no-color")
     else
-    response = runit("tf", "apply \"plan\"")
+    response = runit("tf", "apply \"plan\" -no-color")
     end
   when "destroy"
-    response = runit("tf", "destroy -auto-approve")
+    response = runit("tf", "destroy -auto-approve -no-color")
   end
 
   if HasRun.get
@@ -131,7 +133,7 @@ get '/resume' do
 
   response
 end
-  
+
 get '/*' do
   halt 400, errcheck(4005)
 end

@@ -1,3 +1,3 @@
 output "url" {
-  value       = "${local.fqdn}"
+  value       = "${format("%s%s", "https://", local.fqdn)}"
 }

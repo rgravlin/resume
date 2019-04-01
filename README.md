@@ -20,7 +20,6 @@
       --env="AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
       --env="AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" 
 
-
     microk8s.kubectl expose deployment resume \
       --port 80 \
       --target-port 4570 \

@@ -1,7 +1,6 @@
 require 'bundler/setup'
 require 'sinatra'
 require 'thin'
-require 'uri'
 require 'utf8-cleaner'
 require 'mixlib/shellout'
 
@@ -16,12 +15,6 @@ disable :show_exceptions, :raise_errors, :dump_errors
 
 TF_BIN = "./terraform"
 SHELL_TIMEOUT = ENV['CONFIG_SHELL_TIMEOUT'] || 600
-
-def valid_url?(uri)
-  URI.parse(uri)
-rescue URI::InvalidURIError
-  halt 400, errcheck(4002)
-end
 
 def errcheck(err)
   errors = {

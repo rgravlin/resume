@@ -1,5 +1,4 @@
-# LOCAL BUILDING IS CURRENTLY BROKEN -- TODO:
-* Create public image for resume:latest container
+# TODO
 * Update Terraform ecs.tf, variables.tf, and templates to use variables
 * Test full build and deployment process
 * Change to correct multi-stage build to reduce final container size (Ruby is large)
@@ -22,7 +21,7 @@
     export AWS_DEFAULT_REGION=<YOUR_REGION>
     cd workspace
 
-    $ vagrant -> docker build
+    $ vagrant -> docker build -> local kubernetes docker repository
     docker build -t resume:builder . -f Dockerfile.builder
     docker build -t localhost:32000/resume:latest . -f Dockerfile
     docker push localhost:32000/resume:latest
@@ -42,7 +41,7 @@
       --name resume    
     
     $ validate terraform runner (apply)
-    curl -s $(microk8s.kubectl get svc/resume -o json | jq -r .spec.clusterIP)/resume
+    curl -s $(microk8s.kubectl get svc/resume -o jsonpath='{.spec.clusterIP}')/resume
 
     $ validate terraform runner (destroy)
-    curl -s $(microk8s.kubectl get svc/resume -o json | jq -r .spec.clusterIP)/resume
+    curl -s $(microk8s.kubectl get svc/resume -o jsonpath='{.spec.clusterIP}')/resume

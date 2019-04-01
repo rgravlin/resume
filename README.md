@@ -1,3 +1,8 @@
+# LOCAL BUILDING IS CURRENTLY BROKEN -- TODO:
+* Create public image for resume:latest container
+* Update Terraform ecs.tf, variables.tf, and templates to use variables
+* Test full build and deployment process
+
 # Requirements:
 * Vagrant
 * VirtualBox
@@ -6,6 +11,7 @@
 
     git clone https://github.com/rgravlin/resume.git
     cd resume
+    vi variables.tf (inject your AWS account information)
     vagrant up
     vagrant ssh
     sudo iptables -P FORWARD ACCEPT

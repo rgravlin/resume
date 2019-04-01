@@ -9,10 +9,11 @@
     vagrant up
     vagrant ssh
     sudo iptables -P FORWARD ACCEPT
-    microk8s.enable dns
+    microk8s.enable dns registry
     
     docker build -t resume:builder . -f Dockerfile.builder
     docker build -t localhost:32000/resume:latest . -f Dockerfile
+    docker push localhost:32000/resume:latest
 
     microk8s.kubectl run resume \
       --image localhost:32000/resume \

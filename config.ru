@@ -1,2 +1,2 @@
-require './tf_runner_streaming.rb'
+require './tf_runner.rb'
 run Sinatra::Application

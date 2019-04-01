@@ -1,6 +1,8 @@
 FROM alpine
 
-ENV BUILD_PACKAGES bash curl-dev ruby-dev build-base
+ARG TF_VERSION=0.11.13
+
+ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler
 
 RUN apk update && \
@@ -14,6 +16,10 @@ WORKDIR /usr/app
 
 COPY . /usr/app/
 RUN bundle install
+RUN curl -sSL https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip --output - \
+    | unzip -d /usr/app - \
+    && chmod +x terraform
+
 RUN chown nobody /usr/app
 
 USER nobody

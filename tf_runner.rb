@@ -11,10 +11,7 @@ use UTF8Cleaner::Middleware
 # Fixes Docker STDOUT logging
 $stdout.sync = true
 
-set :bind, '0.0.0.0'
-set :port, 4570
-set :server_settings, :timeout => 3600
-set :protection, true
+set :server, :thin
 disable :show_exceptions, :raise_errors, :dump_errors
 
 TF_BIN = "./terraform"
@@ -39,33 +36,23 @@ def errcheck(err)
   errors[err]
 end
 
-before do
-  # Set method
-  method = request.request_method.to_s.upcase
+def runit(verb, output=$stdout)
 
-  halt 405, errcheck(4001) unless ["GET"].include?(method)
+  commands = {
+    "init" => "init -no-color",
+    "plan" => "plan -out=plan -no-color",
+    "apply" => "apply \"plan\" -no-color",
+    "destroy" => "destroy -auto-approve -no-color"
+  }
 
-  # Check header size
-  halt 413, errcheck(5003) if request.env["CONTENT_LENGTH"]
-end
-
-def runit(cmd, params)
-
-  case cmd
-  when "tf"
-    cmd = [TF_BIN, params].join(" ")
-  else
-    halt 500, errcheck(5001)
-  end
-
-  cmd = Mixlib::ShellOut.new(cmd, :timeout => SHELL_TIMEOUT, :live_stdout => $stdout, :live_stderr => $stdout)
+  cmd = [TF_BIN, commands[verb]].join(" ")
+  cmd = Mixlib::ShellOut.new(cmd, :timeout => SHELL_TIMEOUT, :live_stdout => output, :live_stderr => output)
 
   begin
     cmd = cmd.run_command
   rescue Mixlib::ShellOut::CommandTimeout
     "Shell timed out.\nSTDERR: #{cmd.stderr}\nSTDOUT: #{cmd.stdout}"
   else
-    # ugliness be here -- nc returns info on stderr, how to pipe in mixlib 2>&1? i don't know
     halt 500, errcheck(5002) if cmd.stdout.empty? && cmd.stderr.empty?
     if cmd.stderr.empty?
       cmd.stdout
@@ -78,10 +65,15 @@ def runit(cmd, params)
 
 end
 
+before do
+  method = request.request_method.to_s.upcase
+  halt 405, errcheck(4001) unless ["GET"].include?(method)
+  halt 413, errcheck(5003) if request.env["CONTENT_LENGTH"]
+end
+
 class HasRun
   @run = false
   @locked = false
-
 
   def self.get
     @run
@@ -101,26 +93,27 @@ class HasRun
   end
 end
 
-runit("tf", "init -no-color")
-runit("tf", "plan -out=plan -no-color")
-
+runit("init")
+runit("plan")
 
 get '/resume' do
   action = HasRun.get ? "destroy" : "apply"
 
   puts "Action: #{action}"
 
-  case action
-  when "apply"
-    if HasRun.locked?
-    runit("tf", "init")
-    runit("tf", "plan -out=plan")
-    response = runit("tf", "apply \"plan\" -no-color")
-    else
-    response = runit("tf", "apply \"plan\" -no-color")
+  stream do |out|
+    case action
+    when "apply"
+      if HasRun.locked?
+        runit("init", out)
+        runit("plan", out)
+        runit("apply", out)
+      else
+        runit("apply", out)
+      end
+    when "destroy"
+      runit("destroy", out)
     end
-  when "destroy"
-    response = runit("tf", "destroy -auto-approve -no-color")
   end
 
   if HasRun.get

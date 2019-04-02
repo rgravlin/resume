@@ -1,7 +1,9 @@
 variable "region"                { default = "" }
 variable "ecr"                   { default = "%s.dkr.ecr.us-east-1.amazonaws.com/%s:%s" }
+variable "ecr_repo"              { default = "" }
+variable "ecr_tag"               { default = "" }
 variable "account"               { default = "" }
-variable "instance_type"         { default = "t2.small" }
+variable "instance_type"         { default = "" }
 variable "instance_ami"          { default = "ami-0796380bc6e51157f" }
 variable "website_count"         { default = 1 }
 variable "domain_name"           { default = "" }

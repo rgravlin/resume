@@ -8,7 +8,7 @@ resource "aws_ecs_cluster" "main" {
 data "template_file" "task-website" {
   template = "${file("${path.module}/templates/website.tmpl")}"
   vars {
-    CONFIG_CONTAINER    = "${format(var.ecr, var.account, "dbag.tech", "resume")}"
+    CONFIG_CONTAINER    = "${format(var.ecr, var.account, var.ecr_repo, var.ecr_tag)}"
     CONFIG_LOG_GROUP    = "${local.namespace}"
     CONFIG_LOG_REGION   = "${var.region}"
     CONFIG_LOG_PREFIX   = "${var.cloudwatch_log_prefix}"

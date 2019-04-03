@@ -16,7 +16,7 @@ disable :show_exceptions, :raise_errors, :dump_errors
 TF_BIN = "./terraform"
 SHELL_TIMEOUT = ENV['CONFIG_SHELL_TIMEOUT'] || 600
 
-def errcheck(err)
+def error_check(err)
   errors = {
     4000 => "Invalid request",
     4001 => "Invalid method",
@@ -26,17 +26,21 @@ def errcheck(err)
     5003 => "Invalid Content-Length"
   }
 
+  errors.freeze
+
   errors[err]
 end
 
-def runit(verb, output=$stdout)
+def run_it(verb, output=$stdout)
 
   commands = {
-    "init" => "init -no-color",
-    "plan" => "plan -out=plan -no-color",
-    "apply" => "apply \"plan\" -no-color",
-    "destroy" => "destroy -auto-approve -no-color"
+    :init => "init -no-color",
+    :plan => "plan -out=plan -no-color",
+    :apply => "apply \"plan\" -no-color",
+    :destroy => "destroy -auto-approve -no-color"
   }
+
+  commands.freeze
 
   cmd = [TF_BIN, commands[verb]].join(" ")
   cmd = Mixlib::ShellOut.new(cmd, :timeout => SHELL_TIMEOUT, :live_stdout => output, :live_stderr => output)
@@ -46,7 +50,7 @@ def runit(verb, output=$stdout)
   rescue Mixlib::ShellOut::CommandTimeout
     "Shell timed out.\nSTDERR: #{cmd.stderr}\nSTDOUT: #{cmd.stdout}"
   else
-    halt 500, errcheck(5002) if cmd.stdout.empty? && cmd.stderr.empty?
+    halt 500, error_check(5002) if cmd.stdout.empty? && cmd.stderr.empty?
     if cmd.stderr.empty?
       cmd.stdout
     elsif cmd.stdout.empty?
@@ -60,19 +64,19 @@ end
 
 before do
   method = request.request_method.to_s.upcase
-  halt 405, errcheck(4001) unless ["GET"].include?(method)
-  halt 413, errcheck(5003) if request.env["CONTENT_LENGTH"]
+  halt 405, error_check(4001) unless ["GET"].include?(method)
+  halt 413, error_check(5003) if request.env["CONTENT_LENGTH"]
 end
 
 class HasRun
   @run = false
   @locked = false
 
-  def self.get
+  def self.retrieve
     @run
   end
 
-  def self.set(bit)
+  def self.submit(bit)
     @run = bit
   end
 
@@ -86,45 +90,40 @@ class HasRun
   end
 end
 
-runit("init")
-runit("plan")
+run_it(:init)
+run_it(:plan)
 
 get '/resume' do
-  action = HasRun.get ? "destroy" : "apply"
-
-  puts "Action: #{action}"
+  action = HasRun.retrieve ? "destroy" : "apply"
 
   stream do |out|
     case action
     when "apply"
       if HasRun.locked?
-        runit("init", out)
-        runit("plan", out)
-        runit("apply", out)
+        run_it(:init, out)
+        run_it(:plan, out)
+        run_it(:apply, out)
       else
-        runit("apply", out)
+        run_it(:apply, out)
       end
     when "destroy"
-      runit("destroy", out)
+      run_it(:destroy, out)
+    else
+      nil
     end
   end
 
-  if HasRun.get
-    HasRun.set(false)
-  else
-    HasRun.set(true)
-  end
-
+  HasRun.retrieve ? HasRun.submit(false) : HasRun.submit(true)
   HasRun.locked
 
   response
 end
 
 get '/*' do
-  halt 400, errcheck(4005)
+  halt 400, error_check(4005)
 end
 
 error do
   status 500
-  body errcheck(5000)
+  body error_check(5000)
 end

@@ -10,3 +10,6 @@
 
 # .vagrant files
 **/.vagrant/*
+
+# RubyMine files
+**/.idea/*

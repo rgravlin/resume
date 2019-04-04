@@ -1,3 +1,6 @@
+# NOTE
+This will work locally until Terraform attempts to pull the ECS image.  I will be updating this to include a public image so that anyone can run this completely.
+
 # TODO
 * Update Terraform ecs.tf, variables.tf, and templates to use variables
 * Test full build and deployment process
@@ -19,29 +22,31 @@
     export AWS_ACCESS_KEY_ID=<YOUR_KEY_ID>
     export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_KEY>
     export AWS_DEFAULT_REGION=<YOUR_REGION>
+    export APPNS=resume-runner
+    export BUILD_REPO=localhost:32000/${APPNS}
+    export BUILD_TAG=latest
     cd workspace
 
     $ vagrant -> docker build -> local kubernetes docker repository
-    docker build -t resume:builder . -f Dockerfile.builder
-    docker build -t localhost:32000/resume:latest . -f Dockerfile
-    docker push localhost:32000/resume:latest
+    docker build -t ${BUILD_REPO}:${BUILD_TAG} .
+    docker push ${BUILD_REPO}:${BUILD_TAG}
 
     $ vagrant -> local kubernetes
-    microk8s.kubectl run resume \
-      --image localhost:32000/resume \
+    microk8s.kubectl run ${APPNS} \
+      --image ${BUILD_REPO}:${BUILD_TAG} \
       --env="AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
       --env="AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
       --env="AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" 
 
-    microk8s.kubectl expose deployment resume \
+    microk8s.kubectl expose deployment ${APPNS} \
       --port 80 \
       --target-port 4570 \
       --type ClusterIP \
-      --selector=run=resume \
-      --name resume    
+      --selector=run=${APPNS} \
+      --name ${APPNS}
     
     $ validate terraform runner (apply)
-    curl -s $(microk8s.kubectl get svc/resume -o jsonpath='{.spec.clusterIP}')/resume
+    curl -s $(microk8s.kubectl get svc/${APPNS} -o jsonpath='{.spec.clusterIP}')/resume
 
     $ validate terraform runner (destroy)
-    curl -s $(microk8s.kubectl get svc/resume -o jsonpath='{.spec.clusterIP}')/resume
+    curl -s $(microk8s.kubectl get svc/${APPNS} -o jsonpath='{.spec.clusterIP}')/resume

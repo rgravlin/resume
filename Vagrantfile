@@ -5,7 +5,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-18.04"
 
   config.vm.network "private_network", type: "dhcp"
-  config.vm.synced_folder ".", "/vagrant_data"
 
   config.vm.provider "virtualbox" do |vb|
     vb.cpus = 4
@@ -45,7 +44,7 @@ Vagrant.configure("2") do |config|
 
   workspace_setup = <<-EOF
     mkdir scratch
-    ln -s /vagrant_data /home/vagrant/workspace
+    ln -s /vagrant /home/vagrant/workspace
   EOF
 
   sleep_10 = <<-EOF

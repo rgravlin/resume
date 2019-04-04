@@ -15,8 +15,12 @@ RUN apk update && \
 RUN mkdir ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 
+RUN gem install bundler --no-rdoc --no-ri
+
 COPY Gemfile ${APP_ROOT}/Gemfile
-RUN bundle install
+COPY Gemfile.lock ${APP_ROOT}/Gemfile.lock
+
+RUN bundle install --deployment --binstubs
 RUN curl -sSL https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip --output - \
     | unzip -d /usr/app - \
     && chmod +x terraform
@@ -28,4 +32,4 @@ USER nobody
 
 EXPOSE 4570
 ENTRYPOINT ["/bin/sh","-c"]
-CMD ["thin start -C thin.yml"]
+CMD ["/usr/app/bin/thin start -C thin.yml"]

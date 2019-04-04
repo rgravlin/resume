@@ -1,5 +1,5 @@
 resource "aws_route53_record" "lb" {
-  zone_id = "Z3BTN42YJBA9UK"
+  zone_id = "${var.route53_zoneid}"
   name    = "${format("%s-%s", "resume", local.namespace)}"
   type    = "A"
 

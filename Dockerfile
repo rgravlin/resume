@@ -5,6 +5,7 @@ ARG APP_ROOT=/usr/app
 
 ENV BUILD_PACKAGES bash curl curl-dev ruby-dev build-base
 ENV RUBY_PACKAGES ruby ruby-io-console ruby-bundler
+ENV HOME=/usr/app
 
 RUN apk update && \
     apk upgrade && \
@@ -12,10 +13,14 @@ RUN apk update && \
     apk add $RUBY_PACKAGES && \
     rm -rf /var/cache/apk/*
 
-RUN mkdir ${APP_ROOT}
-WORKDIR ${APP_ROOT}
+RUN mkdir ${APP_ROOT} \
+    && chown nobody ${APP_ROOT}
 
 RUN gem install bundler --no-rdoc --no-ri
+
+USER nobody
+
+WORKDIR ${APP_ROOT}
 
 COPY Gemfile ${APP_ROOT}/Gemfile
 COPY Gemfile.lock ${APP_ROOT}/Gemfile.lock
@@ -26,10 +31,7 @@ RUN curl -sSL https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_$
     && chmod +x terraform
 
 COPY . ${APP_ROOT}/
-RUN chown nobody ${APP_ROOT}
-
-USER nobody
 
 EXPOSE 4570
 ENTRYPOINT ["/bin/sh","-c"]
-CMD ["/usr/app/bin/thin start -C thin.yml"]
+CMD ["bundle exec thin start -C thin.yml"]

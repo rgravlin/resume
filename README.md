@@ -1,5 +1,5 @@
 # NOTE
-This will work locally until Terraform attempts to pull the ECS image.  I will be updating this to include a public image so that anyone can run this completely.
+This will work locally until ECS attempts to pull the container image.  I will be updating this to include a public image so that anyone can run this completely.
 
 # TODO
 * Update Terraform ecs.tf, variables.tf, and templates to use variables
@@ -36,14 +36,17 @@ This will work locally until Terraform attempts to pull the ECS image.  I will b
       --image ${BUILD_REPO}:${BUILD_TAG} \
       --env="AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" \
       --env="AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" \
-      --env="AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" 
+      --env="AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" \
+      --env="HOME=/usr/app" \
+      --labels="app=${APPNS}"
 
     microk8s.kubectl expose deployment ${APPNS} \
       --port 80 \
       --target-port 4570 \
       --type ClusterIP \
       --selector=run=${APPNS} \
-      --name ${APPNS}
+      --name ${APPNS} \
+      --labels="app=${APPNS}"
     
     $ validate terraform runner (apply)
     curl -s $(microk8s.kubectl get svc/${APPNS} -o jsonpath='{.spec.clusterIP}')/resume

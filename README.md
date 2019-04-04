@@ -44,7 +44,7 @@ This will work locally until ECS attempts to pull the container image.  I will b
       --port 80 \
       --target-port 4570 \
       --type ClusterIP \
-      --selector=run=${APPNS} \
+      --selector=app=${APPNS} \
       --name ${APPNS} \
       --labels="app=${APPNS}"
     

@@ -10,6 +10,9 @@ This will work locally until ECS attempts to pull the container image.  I will b
 * Vagrant
 * VirtualBox
 
+# HTTP Streaming
+* Had to disable proxy_buffering in NGINX (behavior looks like lag)
+
 # Build Steps:
     $ local
     git clone https://github.com/rgravlin/resume.git

@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/c8dece56339c39096e7f/maintainability)](https://codeclimate.com/github/rgravlin/resume/maintainability)
+
 # NOTE
 This will work locally until ECS attempts to pull the container image.  I will be updating this to include a public image so that anyone can run this completely.
 

@@ -11,6 +11,7 @@ This project was created to fulfill the following needs:
     * CICD (this part is yet to be implemented)
 * Investment of time in myself
 * Learn more about local Kubernetes testing
+* Learn more about AWS Billing by using tag groups
 * Continue learning more about Ruby
 * Provide an easy way to update my resume
 

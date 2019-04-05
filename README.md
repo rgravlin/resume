@@ -6,12 +6,18 @@ This will work locally until ECS attempts to pull the container image.  I will b
 * Test full build and deployment process
 * Change to correct multi-stage build to reduce final container size (Ruby is large)
 
-# Requirements:
+# Requirements
 * Vagrant
 * VirtualBox
 
 # HTTP Streaming
 * Had to disable proxy_buffering in NGINX (behavior looks like lag)
+
+# High level diagrams
+
+![Resume Runner Infrastructure](https://user-images.githubusercontent.com/47820720/55648770-2dc09580-57af-11e9-9400-fee98c68c351.png)
+
+![Resume Runner Resource Creation](https://user-images.githubusercontent.com/47820720/55648790-3c0eb180-57af-11e9-9eb4-ca48f45a611d.png)
 
 # Build Steps:
     $ local

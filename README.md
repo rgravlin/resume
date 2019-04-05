@@ -1,5 +1,47 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c8dece56339c39096e7f/maintainability)](https://codeclimate.com/github/rgravlin/resume/maintainability)
 
+# WHY
+This project was created to fulfill the following needs:
+* Showcase knowledge of the following:
+
+    * Infrastructure design  
+    * Infrastructure as code  
+    * Local application testing  
+    * Documentation  
+    * CICD (this part is yet to be implemented)
+* Investment of time in myself
+* Learn more about local Kubernetes testing
+* Continue learning more about Ruby
+* Provide an easy way to update my resume
+
+After the first release, it was obvious to me there was still an issue.  The initial creation of all resources took around 180 seconds.  The way the application was built waited to respond until the command was completed.  This is not acceptable and I set out to find out if it was possible, _without websockets_, to stream HTTP data like tail.  Indeed it is!
+
+I then set out to complete this work which was successful with the [_stream_](https://github.com/rgravlin/resume/tree/stream) branch that was recently merged.  I ran into another issue once I deployed it to my production server.  If you see the diagram below the application is fronted by an NGINX proxy.  What I experienced was something like lag.  It would stream the data, but it would pause, and then come back.  This was due to proxy_buffering within NGINX.
+
+> When buffering is enabled, nginx receives a response from the proxied server as soon as possible, saving it into the buffers set by the proxy_buffer_size and proxy_buffers directives. If the whole response does not fit into memory, a part of it can be saved to a temporary file on the disk. Writing to temporary files is controlled by the proxy_max_temp_file_size and proxy_temp_file_write_size directives.
+
+> When buffering is disabled, the response is passed to a client synchronously, immediately as it is received. nginx will not try to read the whole response from the proxied server. The maximum size of the data that nginx can receive from the server at a time is set by the proxy_buffer_size directive. <http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering>
+
+Now that the major components are in place and working as expected, the remaining work will be focused on the following:
+
+* Create public NGINX container for hosting the resume PDF artifact
+* Create Terraform manifest for AWS CodeBuild that clones this repository and performs the following steps:
+
+    * Builds the resume PDF from the LaTeX source  
+    * Builds the NGINX container with the resume PDF artifact  
+    * Pushes the NGINX container to AWS ECR
+    
+## Upcoming Feature 
+A full CICD pipeline using the logic below
+
+1. Clone https://github.com/rgravlin/resume.git
+2. Run _xelatex latex/resume.tex_ (build PDF artifact)
+3. Run _docker build -t ecr.url/resume:latest . -f Dockerfile.resume_ (build Docker artifact)
+4. Run _docker push ecr.url/resume:latest_ (next run of tf_runner.rb will use this latest artifact)
+
+## Upcoming Feature
+The ability for anyone to clone this repository and successfully build and run the containerized application that will build the same resources I am, but in your own AWS account with your own domain names.
+
 # NOTE
 This will work locally until ECS attempts to pull the container image.  I will be updating this to include a public image so that anyone can run this completely.
 

@@ -15,34 +15,32 @@ disable :show_exceptions, :raise_errors, :dump_errors
 TF_BIN = "./terraform"
 SHELL_TIMEOUT = ENV['CONFIG_SHELL_TIMEOUT'] || 600
 
-def error_check(err)
-  errors = {
-    4000 => "Invalid request",
-    4001 => "Invalid method",
-    5000 => "Internal Server Error",
-    5001 => "Command execution selection failure",
-    5002 => "Command execution has no output",
-    5003 => "Invalid Content-Length"
-  }
+ERRORS = {
+  4000 => "Invalid request",
+  4001 => "Invalid method",
+  5000 => "Internal Server Error",
+  5001 => "Command execution selection failure",
+  5002 => "Command execution has no output",
+  5003 => "Invalid Content-Length"
+}
 
-  errors.freeze
+COMMANDS = {
+  :init => "init -no-color",
+  :plan => "plan -out=plan -no-color",
+  :apply => "apply \"plan\" -no-color",
+  :destroy => "destroy -auto-approve -no-color"
+}
 
-  errors[err]
+ERRORS.freeze
+COMMANDS.freeze
+
+def error_check(error)
+  ERRORS[error]
 end
 
 def run_it(verb, output=$stdout)
 
-  commands = {
-    :init => "init -no-color",
-    :plan => "plan -out=plan -no-color",
-    :apply => "apply \"plan\" -no-color",
-    :destroy => "destroy -auto-approve -no-color"
-  }
-
-  commands.freeze
-
-  cmd = [TF_BIN, commands[verb]].join(" ")
-  cmd = Mixlib::ShellOut.new(cmd, :timeout => SHELL_TIMEOUT, :live_stdout => output, :live_stderr => output)
+  cmd = Mixlib::ShellOut.new([TF_BIN, COMMANDS[verb]].join(" "), :timeout => SHELL_TIMEOUT, :live_stdout => output, :live_stderr => output)
 
   begin
     cmd = cmd.run_command

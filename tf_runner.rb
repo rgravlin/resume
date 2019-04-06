@@ -31,16 +31,18 @@ COMMANDS = {
   :destroy => "destroy -auto-approve -no-color"
 }
 
-ERRORS.freeze
-COMMANDS.freeze
-
 def error_check(error)
   ERRORS[error]
 end
 
 def run_it(verb, output=$stdout)
 
-  cmd = Mixlib::ShellOut.new([TF_BIN, COMMANDS[verb]].join(" "), :timeout => SHELL_TIMEOUT, :live_stdout => output, :live_stderr => output)
+  cmd = Mixlib::ShellOut.new(
+    [TF_BIN, COMMANDS[verb]].join(" "),
+    :timeout => SHELL_TIMEOUT,
+    :live_stdout => output,
+    :live_stderr => output
+  )
 
   begin
     cmd = cmd.run_command

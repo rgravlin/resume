@@ -60,9 +60,9 @@ This will work locally until ECS attempts to pull the container image.  I will b
 
 # High level diagrams
 
-![Resume Runner Infrastructure](https://user-images.githubusercontent.com/47820720/55648770-2dc09580-57af-11e9-9400-fee98c68c351.png)
+![Resume Runner Infrastructure](https://user-images.githubusercontent.com/47820720/55676728-5e382a80-58a8-11e9-84ae-8274658d8405.png)
 
-![Resume Runner Resource Creation](https://user-images.githubusercontent.com/47820720/55648790-3c0eb180-57af-11e9-9eb4-ca48f45a611d.png)
+![Resume Runner Resource Creation](https://user-images.githubusercontent.com/47820720/55676730-6a23ec80-58a8-11e9-9bb6-ff7dd3e4175a.png)
 
 # Build Steps:
     $ local

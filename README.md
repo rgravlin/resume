@@ -32,31 +32,23 @@ Now that the major components are in place and working as expected, the remainin
     * Builds the NGINX container with the resume PDF artifact  
     * Pushes the NGINX container to AWS ECR
     
-## Upcoming Feature 
-A full CICD pipeline using the logic below
+## PLANNED:
+* A full CICD pipeline using the logic below
 
 1. Clone https://github.com/rgravlin/resume.git
 2. Run _xelatex latex/resume.tex_ (build PDF artifact)
 3. Run _docker build -t ecr.url/resume:latest . -f Dockerfile.resume_ (build Docker artifact)
 4. Run _docker push ecr.url/resume:latest_ (next run of tf_runner.rb will use this latest artifact)
 
-## Upcoming Feature
-The ability for anyone to clone this repository and successfully build and run the containerized application that will build the same resources I am, but in your own AWS account with your own domain names.
-
-# NOTE
-This will work locally until ECS attempts to pull the container image.  I will be updating this to include a public image so that anyone can run this completely.
+* The ability for anyone to clone this repository and successfully build and run the containerized application that will build the same resources I am, but in your own AWS account with your own domain names.
 
 # TODO
-* Update Terraform ecs.tf, variables.tf, and templates to use variables
+* Create public NGINX container that serves single file
 * Test full build and deployment process
-* Change to correct multi-stage build to reduce final container size (Ruby is large)
 
 # Requirements
 * Vagrant
 * VirtualBox
-
-# HTTP Streaming
-* Had to disable proxy_buffering in NGINX (behavior looks like lag)
 
 # High level diagrams
 

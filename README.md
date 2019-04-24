@@ -32,6 +32,20 @@ Now that the major components are in place and working as expected, the remainin
     * Builds the NGINX container with the resume PDF artifact  
     * Pushes the NGINX container to AWS ECR
     
+# TECH
+* LaTeX
+* Ruby (Sinatra Stream, Thin, Bundler)
+* NGINX
+* Docker
+* Kubernetes (microk8s)
+* Vagrant
+* VirtualBox
+* Terraform
+* RubyMine with Remote Intepreter (vagrant)
+* Ubuntu 18.04 LTS (vagrant)
+* Alpine Linux (container)
+* Amazon Web Services
+    
 ## PLANNED:
 * A full CICD pipeline using the logic below
 

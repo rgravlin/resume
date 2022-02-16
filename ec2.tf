@@ -10,17 +10,10 @@ resource "aws_instance" "ecs" {
   subnet_id              = "${aws_subnet.primary.id}"
   key_name               = "${aws_key_pair.main.key_name}"
   iam_instance_profile   = "${aws_iam_instance_profile.ecs.name}"
-  user_data_base64       = "${base64encode(data.template_file.user-data.rendered)}"
+  user_data_base64       = "${base64encode(templatefile("${path.module}/templates/userdata.tftpl", { CONFIG_CLUSTER = local.namespace }))}"
 
   tags = {
     Name                 = "${local.fqdn}"
     namespace            = "${local.namespace}"
-  }
-}
-
-data "template_file" "user-data" {
-  template = "${file("${path.module}/templates/userdata.tmpl")}"
-  vars {
-    CONFIG_CLUSTER = "${local.namespace}"
   }
 }

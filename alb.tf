@@ -17,7 +17,7 @@ resource "aws_lb" "main" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_internet_gateway.main"]
+  depends_on = [aws_internet_gateway.main]
 }
 
 resource "aws_lb_listener" "http-to-https" {

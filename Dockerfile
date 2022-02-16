@@ -48,7 +48,7 @@ COPY --from=builder-bundle ${APP_ROOT}/ ${APP_ROOT}/
 FROM ruby:${RUBY_VERSION}-alpine
 
 ARG BUNDLE_VERSION=2.0.1
-ARG TF_VERSION=0.11.12
+ARG TF_VERSION=1.1.5
 ARG APP_ROOT=/usr/app
 ARG USER=nobody
 

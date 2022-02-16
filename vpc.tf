@@ -20,7 +20,7 @@ resource "aws_internet_gateway" "main" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_subnet" "primary" {
@@ -35,7 +35,7 @@ resource "aws_subnet" "primary" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_subnet" "secondary" {
@@ -50,7 +50,7 @@ resource "aws_subnet" "secondary" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_route" "route" {
@@ -58,7 +58,7 @@ resource "aws_route" "route" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.main.id}"
 
-  depends_on = ["aws_internet_gateway.main"]
+  depends_on = [aws_internet_gateway.main]
 }
 
 resource "aws_security_group" "allow_ssh" {
@@ -78,7 +78,7 @@ resource "aws_security_group" "allow_ssh" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_security_group" "allow_http" {
@@ -105,7 +105,7 @@ resource "aws_security_group" "allow_http" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_security_group" "allow_egress" {
@@ -125,7 +125,7 @@ resource "aws_security_group" "allow_egress" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }
 
 resource "aws_security_group" "allow_sg" {
@@ -146,5 +146,5 @@ resource "aws_security_group" "allow_sg" {
     namespace = "${local.namespace}"
   }
 
-  depends_on = ["aws_vpc.main"]
+  depends_on = [aws_vpc.main]
 }

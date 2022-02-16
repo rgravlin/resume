@@ -14,14 +14,14 @@ resource "aws_iam_instance_profile" "ecs" {
   name = "ecs-${local.namespace}"
   role = "${aws_iam_role.ecs.name}"
 
-  depends_on = ["aws_iam_role.ecs"]
+  depends_on = [aws_iam_role.ecs]
 }
 
 resource "aws_iam_role_policy_attachment" "ecs" {
   role       = "${aws_iam_role.ecs.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 
-  depends_on = ["aws_iam_role.ecs"]
+  depends_on = [aws_iam_role.ecs]
 }
 
 data "template_file" "trust-ec2-sts" {

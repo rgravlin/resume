@@ -66,7 +66,7 @@ Now that the major components are in place and working as expected, the remainin
 
 # High level diagrams
 
-![Resume Runner Infrastructure](https://user-images.githubusercontent.com/47820720/55686287-48b91400-592d-11e9-8cbd-d8e0ee941490.png)
+![Resume Runner Infrastructure](https://user-images.githubusercontent.com/47820720/163279679-89355c93-da19-45ca-9129-b7e4fdd81241.png)
 
 # Build Steps:
     $ local

@@ -1,11 +1,7 @@
 \documentclass[10pt]{article} % Default font size
-
 \input{structure.tex} % Include the file specifying document layout
-
 %----------------------------------------------------------------------------------------
-
 \begin{document}
-
 %----------------------------------------------------------------------------------------
 % NAME AND CONTACT INFORMATION
 %----------------------------------------------------------------------------------------
@@ -16,7 +12,6 @@
 \hspace{3cm} \= \hspace{4cm} \= \kill % Spacing within the block
 {\bf Address} \> 28 LANTERN WAY,\\ % Address line 1
 \> SHIRLEY, MA 01464 \\ % Address line 2
-{\bf Date of Birth} \> 20$^{th}$ December 1981 \\ % Date of birth 
 \end{tabbing}}
 \hfill % Horizontal space between the two blocks
 \parbox{0.5\textwidth}{ % Second block
@@ -27,22 +22,9 @@
 {\bf GitHub} \> \href{https://github.com/rgravlin/resume}{https://github.com/rgravlin/resume} \\ % GitHub URL
 \end{tabbing}}
 %----------------------------------------------------------------------------------------
-% EDUCATION SECTION
-%----------------------------------------------------------------------------------------
-
-\section{Education}
-
-\tabbedblock{
-\bf{2000} \> High School - \href{https://nrhs.nrsd.net/}{Nashoba Regional High School} \\
-\bf{2008} \> Associate of Arts - \href{https://www.fsw.edu/}{Florida SouthWestern State College} \\[5pt]
-}
-
-%----------------------------------------------------------------------------------------
 % EMPLOYMENT HISTORY SECTION
 %----------------------------------------------------------------------------------------
-
 \section{Employment History}
-
 \job
 {2019 -}{Present}
 {Ultimate Software / UKG, Weston, FL, United States}
@@ -51,16 +33,18 @@
 {\begin{itemize-noindent}
 \item{Member of Cloud Platform Group providing a developer centric cloud platform abstraction}
 \item{Member of Observability team providing managed services for InfluxDB, ELK, and Sensu}
-\item{Maintained alerting system of 12,000 clients}
-\item{Influx Metrics stack writing 250,000 metrics per second globally}
-\item{ELK stack writing 100,000 logs per second globally}
+\item{Maintained}
+  \begin{itemize}
+    \item{Alerting system of 12,000 clients}
+    \item{Influx Metrics stack writing 250,000 metrics per second globally}
+    \item{ELK stack writing 100,000 logs per second globally}
+  \end{itemize}
 \item{Created custom Kubernetes native metrics routing based on Kubernetes labels}
 \item{Created ElasticSearch shard initializer to alleviate scaling issue}
 \item{Created ElasticSearch shard watcher to monitor problematic indices}
 \item{Created and implemented InfluxDB to Kubernetes InfluxDB migration strategy}
 \item{Platforms: OpenStack/GCP/Kubernetes, CICD: GitLab, BitBucket, Concourse, Helm, Chef, Languages: Golang, Python, Bash}
 \end{itemize-noindent}}
-
 %------------------------------------------------
 \job
 {2015 -}{2019}
@@ -74,7 +58,6 @@
 \item{Responsible for managing and helping to resolve production platform issues by creating incident response teams that resolved production issues}
 \item{Platform: AWS/GCP Resources, CICD: Bamboo, AWS/GCP Builders, Terraform, Chef, Ansible}
 \end{itemize-noindent}}
-
 %------------------------------------------------
 \newpage
 \job
@@ -84,15 +67,10 @@
 {Computer Repair Technician and Technical Support}
 {\begin{itemize-noindent}
 \item{Performed remote, on-site and in-house repair of desktops, laptops, and servers}
-\item{Deployed small business VoIP TalkSwitch and FortiVoice phone systems}
-\item{Installed CCTV and NVR surveillance systems, analog and IP cameras}
-\item{Installed and maintained backup disaster recovery systems for customers}
-\item{Used Zenith MSP software to manage customer networks and servers}
+\item{Installed and maintained small business phone, surveillance, and backup disaster recovery systems}
 \item{Utilized SharePoint and Microsoft Access internally for automated updates of distributor inventory and export to eCommerce websites}
 \end{itemize-noindent}}
-
 %------------------------------------------------
-
 \job
 {2009 -}{2009}
 {Eliza Corporation, Beverly, MA, United States}
@@ -104,9 +82,7 @@
 \item{Maintained network monitoring systems}
 \item{Implemented security remediation based on 3rd party automated scanning}
 \end{itemize-noindent}}
-
 %------------------------------------------------
-
 \job
 {2004 -}{2008}
 {New Vision Consulting, Naples, FL, United States}
@@ -119,7 +95,6 @@
 \item{Consulted with clients and made recommendations based on business needs and constraints}
 \item{Attempted to find alternative solutions for clients such as using free software}
 \end{itemize-noindent}}
-
 %-----------------------------------------------
 \job
 {2000 -}{2001}
@@ -142,4 +117,12 @@
 {\begin{itemize-noindent}
 \item{Performed remote, on-site and in-house repair of desktops, laptops, and servers}
 \end{itemize-noindent}}
+%----------------------------------------------------------------------------------------
+% EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+\section{Education}
+\tabbedblock{
+\bf{2000} \> High School - \href{https://nrhs.nrsd.net/}{Nashoba Regional High School} \\
+\bf{2008} \> Associate of Arts - \href{https://www.fsw.edu/}{Florida SouthWestern State College} \\[5pt]
+}
 \end{document}

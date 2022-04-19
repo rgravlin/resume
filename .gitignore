@@ -16,3 +16,8 @@ variables.tf
 
 # RubyMine files
 **/.idea/*
+
+# LaTeX temporary files
+latex/resume.aux
+latex/resume.log
+latex/resume.out
